@@ -133,7 +133,7 @@ let toDNF f =
 let toCNF f = 
   let notDNF = toDNF (Not f) in 
   let rec notDeMorgan f = match f with
-    | Not f -> notDeMorgan f
+    | Not f -> f
     | Or (f1, f2) -> And (notDeMorgan f1, notDeMorgan f2)
     | And (f1, f2) -> Or (notDeMorgan f1, notDeMorgan f2)
     | f -> Not f
