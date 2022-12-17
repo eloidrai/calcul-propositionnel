@@ -62,9 +62,9 @@ let is_equivalent f1 f2 =
   List.equal (==) (List.map (evaluate f1) valuations) (List.map (evaluate f2) valuations)
 
 let print_truth_table f = 
-  let variables = List.sort_uniq (-) (variable_list f) in
+  let variables = List.sort_uniq (fun a b -> b-a) (variable_list f) in
   let valuations = generate_all_valuations variables in
-  let header = String.cat (String.concat "|" (List.map string_of_int variables)) "|=" in
+  let header = String.cat (String.concat "|" (List.map string_of_int (List.rev variables))) "|=" in
   let get_valuation_line f v = String.cat (String.concat "|" (List.map (fun (i, b) -> if b then "1" else "0") v)) (if evaluate f v then "|1" else "|0") in
   let table = String.concat "\n" (List.map (get_valuation_line f) valuations) in
   print_endline (String.concat "\n" [header;table])
